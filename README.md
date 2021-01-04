@@ -14,14 +14,15 @@ We can check for any missing branches that we need to create a local copy of. Le
 git branch -a
 
 * main
-  remotes/origin/develop
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/dev
   remotes/origin/main
 ```
 
-We can easily tell from this output whether we have local copies of all remote branches: The remote ones are prefixed with the remotes/origin/ path, and the local ones aren’t. So, only our main branch is local, whereas remotes/origin/develop and remotes/origin/release/0.1 are not. That’s OK — let’s just create local copies:
+We can easily tell from this output whether we have local copies of all remote branches: The remote ones are prefixed with the remotes/origin/ path, and the local ones aren’t. So, only our main branch is local, whereas remotes/origin/dev are not. That’s OK — let’s just create local copies:
 
 ```bash
-git checkout -b develop origin/develop
+git checkout -b develop origin/dev
 ```
 
 After creating local copies of everything, we can verify once again whether all branches with the remotes/origin/ prefix have corresponding local copies (shown without the prefix):
@@ -29,9 +30,10 @@ After creating local copies of everything, we can verify once again whether all 
 ```bash
 git branch -a
 
-  develop
+  dev
 * main
-  remotes/origin/develop
+  remotes/origin/HEAD -> origin/main
+  remotes/origin/dev
   remotes/origin/main
 ```
 
@@ -42,14 +44,17 @@ At this point, let’s assume we have an SSH-cloned URL of our new repository. I
 Let’s use the SSH-cloned URL of our new repository to create a new remote in our existing local repository by executing the following command:
 
 ```bash
-git remote add new-origin git@github.com:manakor/manascope.git
+git remote add new-origin git@github.com:user/repo.git
 ```
 
-This will give us two remotes for the existing repository: the original one (named origin, connected to the existing remote host) and a new one (named new-origin, connected to the new host).
+This will give us two remotes for the existing repository: 
+the original one (named origin, connected to the existing remote host) and a new one (named new-origin, connected to the new host).
 
-(Git has this concept of “remotes,” which are simply URLs to other copies of your repository. The name origin refers to the original remote repository; by convention, it is considered the primary centralized repository.)
+(Git has this concept of “remotes,” which are simply URLs to other copies of your repository. 
+The name origin refers to the original remote repository; by convention, it is considered the primary centralized repository.)
 
-Now we are ready to push all local branches and tags to the new remote named new-origin. We could push each local branch separately, but pushing all branches at once would be much faster by executing the following Git command:
+Now we are ready to push all local branches and tags to the new remote named new-origin. 
+We could push each local branch separately, but pushing all branches at once would be much faster by executing the following Git command:
 
 ```bash
 git push --all new-origin
